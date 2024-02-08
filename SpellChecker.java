@@ -37,27 +37,28 @@ public class SpellChecker {
 		String[] dictionary = new String[3000];
 		In in = new In(fileName);
 		// Your code here
-		for (int i = 0; i < dictionary.length; i++); {
+		for (int i = 0; i < dictionary.length; i++) {
 			dictionary[i] = in.readString();
 		}
 		return dictionary;
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-		// Your code goes here
-		String distance = "";
-		int steps = word.length();
+		String closestWord = word;
+		int minDistance = word.length(); // max possible distance
 		for (int i = 0; i < dictionary.length; i++) {
-			int levenshteinChecker = levenshtein(word, dictionary[i]);
-			if (levenshteinChecker < steps) {
-				distance = dictionary[i];
-				steps = levenshteinChecker;
+			String dictWord = dictionary[i];
+			int levenshteinDistance = levenshtein(word, dictWord);
+			if (levenshteinDistance < minDistance) {
+				closestWord = dictWord;
+				minDistance = levenshteinDistance;
 			}
 		}
-		if (threshold < steps) {
+		if (minDistance <= threshold) {
+			return closestWord;
+		} else {
 			return word;
 		}
-		return distance;
 	}
 
 }
