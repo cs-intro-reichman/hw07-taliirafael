@@ -37,10 +37,12 @@ public class HashTagTokenizer {
         if (hashtag.isEmpty()) {
             return;
         }
-        for (int i = 1; i <= hashtag.length(); i++) {
-			if (existInDictionary(hashtag.substring(0, i), dictionary)) {
+ 
+        int N = hashtag.length();
+        for (int i = 1; i <= N; i++) {
+			if (existInDictionary(hashtag.substring(i, N), dictionary)) {
 				breakHashTag(hashtag.substring(0, i), dictionary);
-				System.out.println(hashtag.substring(0, i));
+				System.out.println(hashtag.substring(i, N));
 				return;
 
 			}
