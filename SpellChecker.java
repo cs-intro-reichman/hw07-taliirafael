@@ -1,3 +1,4 @@
+import javax.print.DocFlavor.STRING;
 
 public class SpellChecker {
 
@@ -12,24 +13,51 @@ public class SpellChecker {
 
 	public static String tail(String str) {
 		// Your code goes here
+		str = str.substring(1, str.length());
+		return str;
 	}
 
 	public static int levenshtein(String word1, String word2) {
-		// Your code goes here
+		word1 = word1.toLowerCase();
+		word2 = word2.toLowerCase();
+		if (word1.isEmpty()) {
+			return word2.length();
+		}
+		if (word2.isEmpty()) {
+			return word1.length();
+		}
+		if (word1.charAt(0) == word2.charAt(0)) {
+			return levenshtein(tail(word1), tail(word2));
+		}
+		int min = Math.min(levenshtein(tail(word1), word2), levenshtein(word1, tail(word2)));
+		return 1 + Math.min(min, levenshtein(tail(word1), tail(word2)) + 0);
 	}
 
 	public static String[] readDictionary(String fileName) {
 		String[] dictionary = new String[3000];
-
 		In in = new In(fileName);
-
 		// Your code here
-
+		for (int i = 0; i < dictionary.length; i++); {
+			dictionary[i] = in.readString();
+		}
 		return dictionary;
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
 		// Your code goes here
+		String distance = "";
+		int steps = word.length();
+		for (int i = 0; i < dictionary.length; i++) {
+			int levenshteinChecker = levenshtein(word, dictionary[i]);
+			if (levenshteinChecker < steps) {
+				distance = dictionary[i];
+				steps = levenshteinChecker;
+			}
+		}
+		if (threshold < steps) {
+			return word;
+		}
+		return distance;
 	}
 
 }
