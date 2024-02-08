@@ -31,7 +31,7 @@ public class HashTagTokenizer {
 	}
 
 
-	public static void breakHashTag(String hashtag, String[] dictionary) {
+	/* public static void breakHashTag(String hashtag, String[] dictionary) {
 		hashtag = hashtag.toLowerCase();
 		// Base case: do nothing (return) if hashtag is an empty string.
         if (hashtag.isEmpty()) {
@@ -49,4 +49,25 @@ public class HashTagTokenizer {
 		}
 
 	}
-}
+	*/
+
+	public static void breakHashTag(String hashtag, String[] dictionary) {
+		hashtag = hashtag.toLowerCase();
+		// Base case: do nothing (return) if hashtag is an empty string.
+		if (hashtag.isEmpty()) {
+			return;
+		}
+
+		int N = hashtag.length();
+		for (int i = 1; i <= N; i++) {
+			if (existInDictionary(hashtag.substring(0, i), dictionary)) {
+				System.out.println(hashtag.substring(0, i)); // Print the initial substring
+				breakHashTag(hashtag.substring(i), dictionary); // Recursively process the rest of the hashtag
+				return;
+			}
+		}
+		// If no valid word is found in the dictionary, print the entire hashtag
+		System.out.println(hashtag);
+		}
+
+	}

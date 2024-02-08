@@ -43,7 +43,7 @@ public class SpellChecker {
 		return dictionary;
 	}
 
-	public static String spellChecker(String word, int threshold, String[] dictionary) {
+	/*public static String spellChecker(String word, int threshold, String[] dictionary) {
 		String closestWord = word;
 		int minDistance = word.length(); // max possible distance
 		for (int i = 0; i < dictionary.length; i++) {
@@ -60,5 +60,26 @@ public class SpellChecker {
 			return word;
 		}
 	}
+	*/
+	public static String spellChecker(String word, int threshold, String[] dictionary) {
+		String closestWord = word;
+		int minDistance = threshold + 1; // Initialize minDistance to threshold + 1
+	
+		for (int i = 0; i < dictionary.length; i++) {
+			String dictWord = dictionary[i];
+			int levenshteinDistance = levenshtein(word, dictWord);
+			if (levenshteinDistance < minDistance) {
+				closestWord = dictWord;
+				minDistance = levenshteinDistance;
+			}
+		}
+
+		if (minDistance <= threshold) {
+			return closestWord;
+		} else {
+			return word;
+		}
+	}
+		
 
 }
